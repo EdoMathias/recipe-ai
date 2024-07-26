@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from '../enums/status-code';
+import { eStatusCode } from '../enums/status-code';
 import { RouteNotFoundError } from '../models/client-errors';
 import { logger } from '../utils/logger';
 import { appConfig } from '../utils/app-config';
@@ -32,11 +32,11 @@ class ErrorsMiddleware {
     logger.logError(err);
 
     // Take error status:
-    const status = err.status || StatusCode.InternalServerError;
+    const status = err.status || eStatusCode.InternalServerError;
 
     // Take error message:
     const message =
-      status === StatusCode.InternalServerError && appConfig.isProduction
+      status === eStatusCode.InternalServerError && appConfig.isProduction
         ? 'Some error, please try again later.'
         : err.message;
 

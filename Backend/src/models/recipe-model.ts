@@ -16,16 +16,19 @@ export class RecipeModel {
     this.recipeSteps = recipe.recipeSteps;
   }
 
-  // validation
-  private static registerValidationSchema = Joi.object({
+  //----------------------------------------------------------------------------
+  // validation schemas
+  private static insertValidationSchema = Joi.object({
     id: Joi.number().forbidden(),
     recipeName: Joi.string().required().min(2).max(50),
     recipeType: Joi.array().items(Joi.string().min(1)).required().min(1),
     recipeSteps: Joi.object().pattern(Joi.string().min(1), Joi.string().min(1)),
   });
 
-  public validateRegister(): void {
-    const result = RecipeModel.registerValidationSchema.validate(this);
+  //----------------------------------------------------------------------------
+  // Validation functions
+  public validateInsert(): void {
+    const result = RecipeModel.insertValidationSchema.validate(this);
     if (result.error) {
       throw new ValidationError(result.error.message);
     }

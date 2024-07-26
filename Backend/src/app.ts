@@ -6,7 +6,7 @@ import { fileSaver } from 'uploaded-file-saver';
 import { appConfig } from './utils/app-config';
 import { errorsMiddleware } from './middleware/errors-middleware';
 import { loggerMiddleware } from './middleware/logger-middleware';
-import { dataRouter } from './controllers/data-controller';
+import { recipeRouter } from './controllers/recipe-controller';
 
 // Main application class:
 class App {
@@ -31,7 +31,7 @@ class App {
     this.server.use(loggerMiddleware.logToConsole);
 
     // Connect any controller route to the server:
-    this.server.use('/api', dataRouter);
+    this.server.use('/api', recipeRouter);
 
     // Route not found middleware:
     this.server.use(errorsMiddleware.routeNotFound);
