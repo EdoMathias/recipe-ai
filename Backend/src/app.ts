@@ -1,49 +1,48 @@
-import cors from "cors";
-import express from "express";
-import expressFileUpload from "express-fileupload";
-import path from "path";
-import { fileSaver } from "uploaded-file-saver";
-import { appConfig } from "./2-utils/app-config";
-import { errorsMiddleware } from "./4-middleware/errors-middleware";
-import { loggerMiddleware } from "./4-middleware/logger-middleware";
-import { dataRouter } from "./6-controllers/data-controller";
+import cors from 'cors';
+import express from 'express';
+import expressFileUpload from 'express-fileupload';
+import path from 'path';
+import { fileSaver } from 'uploaded-file-saver';
+import { appConfig } from './utils/app-config';
+import { errorsMiddleware } from './middleware/errors-middleware';
+import { loggerMiddleware } from './middleware/logger-middleware';
+import { dataRouter } from './controllers/data-controller';
 
 // Main application class:
 class App {
+  // Express server:
+  private server = express();
 
-    // Express server: 
-    private server = express();
+  // Start app:
+  public start(): void {
+    // Enable CORS requests:
+    this.server.use(cors()); // Enable CORS for any frontend website.
 
-    // Start app:
-    public start(): void {
+    // Create a request.body containing the given json from the front:
+    this.server.use(express.json());
 
-        // Enable CORS requests:
-        this.server.use(cors()); // Enable CORS for any frontend website.
+    // Create request.files containing uploaded files:
+    this.server.use(expressFileUpload());
 
-        // Create a request.body containing the given json from the front:
-        this.server.use(express.json());
+    // Configure images folder:
+    fileSaver.config(path.join(__dirname, '1-assets', 'images'));
 
-        // Create request.files containing uploaded files: 
-        this.server.use(expressFileUpload());
+    // Register middleware:
+    this.server.use(loggerMiddleware.logToConsole);
 
-        // Configure images folder: 
-        fileSaver.config(path.join(__dirname, "1-assets", "images"));
+    // Connect any controller route to the server:
+    this.server.use('/api', dataRouter);
 
-        // Register middleware:
-        this.server.use(loggerMiddleware.logToConsole);
+    // Route not found middleware:
+    this.server.use(errorsMiddleware.routeNotFound);
 
-        // Connect any controller route to the server:
-        this.server.use("/api", dataRouter);
+    // Catch all middleware:
+    this.server.use(errorsMiddleware.catchAll);
 
-        // Route not found middleware: 
-        this.server.use(errorsMiddleware.routeNotFound);
-
-        // Catch all middleware: 
-        this.server.use(errorsMiddleware.catchAll);
-
-        this.server.listen(appConfig.port, () => console.log("Listening on http://localhost:" + appConfig.port));
-    }
-
+    this.server.listen(appConfig.port, () =>
+      console.log('Listening on http://localhost:' + appConfig.port),
+    );
+  }
 }
 
 const app = new App();

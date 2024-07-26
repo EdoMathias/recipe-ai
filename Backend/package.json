@@ -4,25 +4,33 @@
   "description": "",
   "scripts": {
     "start": "nodemon --exec ts-node src/app.ts --quiet",
-    "lint": "eslint 'src/**/*.{js,ts}'",
+    "lint": "eslint .",
+    "start:dev": "yarn lint && yarn start",
     "format": "prettier --write 'src/**/*.{js,ts,json,md}'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.7.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/express-fileupload": "^1.4.4",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.14.12",
-    "eslint": "^9.7.0",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
+    "eslint": "9.x",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3"
+    "globals": "^15.8.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^7.17.0"
   },
   "dependencies": {
     "cors": "^2.8.5",
