@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "moduleResolution": "Node",
+    "module": "ES6",
     "esModuleInterop": true,
     "removeComments": true
   }
