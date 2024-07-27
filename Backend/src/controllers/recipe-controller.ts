@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { recipeService } from '../services/recipe-service';
 import { ValidationError } from '../models/client-errors';
+import { RecipeModel } from '../models/recipe-model';
+import { eStatusCode } from '../enums/status-code';
 
 class RecipeController {
   // Create a router object for listening to HTTP requests:
@@ -40,7 +42,20 @@ class RecipeController {
   private async getRecipeById(): Promise<void> {}
 
   //----------------------------------------------------------------------------
-  private async addRecipe(): Promise<void> {}
+  private async addRecipe(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const recipe = new RecipeModel(request.body);
+      const newRecipe = await recipeService.addRecipe(recipe);
+
+      response.status(eStatusCode.Created).json(newRecipe);
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
 }
 
 const recipeController = new RecipeController();

@@ -45,7 +45,7 @@ class RecipeService {
     const sqlQuery =
       'INSERT INTO recipes(recipe_name, recipe_steps) VALUES(?,?)';
 
-    const values = [recipe.recipeName, recipe.recipeSteps];
+    const values = [recipe.recipeName, JSON.stringify(recipe.recipeSteps)];
 
     const info: OkPacketParams = await dal.execute<ResultSetHeader>(
       sqlQuery,
