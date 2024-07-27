@@ -4,6 +4,7 @@ import fsPromises from 'fs/promises';
 class Logger {
   private filePath = 'errors.log';
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async logError(err: any): Promise<void> {
     const now = new Date();
     const content = `Time: ${now}\nMessage: ${err.message}\nStack: ${err.stack}\n---------------------------------------\n\n`;

@@ -1,5 +1,27 @@
-import mysql2, { PoolOptions, QueryError } from 'mysql2';
+import mysql2, {
+  Pool,
+  PoolOptions,
+  QueryError,
+  ResultSetHeader,
+  RowDataPacket,
+} from 'mysql2';
 import { appConfig } from './app-config';
+
+// Type for SQL query values
+type SQLValue =
+  | string
+  | number
+  | boolean
+  | null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | Record<string, any>
+  | SQLValue[];
+
+type QueryResult =
+  | RowDataPacket[]
+  | RowDataPacket[][]
+  | ResultSetHeader
+  | ResultSetHeader[];
 
 // DAL = Data Access Layer - The only one accessing the database.
 class DAL {
@@ -12,13 +34,16 @@ class DAL {
   };
 
   // Creating a connection. If the connection is closed, the pool will create another one:
-  private readonly connection = mysql2.createPool(this.options);
+  private readonly connection: Pool = mysql2.createPool(this.options);
 
   // Execute sql:
-  public execute(sql: string, values?: any[]): Promise<any> {
+  public execute<T extends QueryResult>(
+    sql: string,
+    values?: SQLValue[],
+  ): Promise<T> {
     // To Promisify
-    return new Promise<any>((resolve, reject) => {
-      this.connection.query(sql, values, (err: QueryError, result: any) => {
+    return new Promise<T>((resolve, reject) => {
+      this.connection.query(sql, values, (err: QueryError, result: T) => {
         if (err) {
           reject(err);
           return;

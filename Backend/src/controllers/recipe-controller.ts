@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { recipeService } from '../services/recipe-service';
+import { ValidationError } from '../models/client-errors';
 
 class RecipeController {
   // Create a router object for listening to HTTP requests:
@@ -26,8 +27,12 @@ class RecipeController {
     try {
       const recipes = await recipeService.getAllRecipes();
       response.json(recipes);
-    } catch (err: unknown) {
-      next(err);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        next(error);
+      } else {
+        next(new ValidationError('An unknown error occurred'));
+      }
     }
   }
 

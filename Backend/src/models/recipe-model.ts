@@ -1,4 +1,3 @@
-import { eRole } from '../enums/role';
 import Joi from 'joi';
 import { ValidationError } from './client-errors';
 import { RecipeSteps } from './recipe-steps-model';

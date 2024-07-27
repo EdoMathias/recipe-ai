@@ -1,14 +1,18 @@
 import { ResourceNotFoundError } from '../models/client-errors';
 import { RecipeModel } from '../models/recipe-model';
 import { dal } from '../utils/dal';
-import { OkPacketParams } from 'mysql2';
+import { OkPacketParams, ResultSetHeader, RowDataPacket } from 'mysql2';
 
 class RecipeService {
   //----------------------------------------------------------------------------
   public async getAllRecipes(): Promise<RecipeModel[]> {
     const sqlQuery = 'SELECT * FROM recipes';
 
-    const recipes = await dal.execute(sqlQuery);
+    // const recipes = await dal.execute(sqlQuery);
+
+    const rowDataPacket: RowDataPacket[] =
+      await dal.execute<RowDataPacket[]>(sqlQuery);
+    const recipes: RecipeModel[] = rowDataPacket as RecipeModel[];
 
     return recipes;
   }
@@ -17,8 +21,15 @@ class RecipeService {
   public async getRecipeById(id: number): Promise<RecipeModel> {
     const sqlQuery = `SELECT * FROM recipes WHERE id = ${id}`;
 
-    const recipes = await dal.execute(sqlQuery);
-    const recipe = recipes[0];
+    // const recipes = await dal.execute(sqlQuery);
+    // const recipe = recipes[0];
+
+    // if (!recipe) {
+    //   throw new ResourceNotFoundError(id);
+    // }
+
+    const rowDataPacket: RowDataPacket[] = await dal.execute(sqlQuery);
+    const recipe: RecipeModel = rowDataPacket[0] as RecipeModel;
 
     if (!recipe) {
       throw new ResourceNotFoundError(id);
@@ -36,7 +47,10 @@ class RecipeService {
 
     const values = [recipe.recipeName, recipe.recipeSteps];
 
-    const info: OkPacketParams = await dal.execute(sqlQuery, values);
+    const info: OkPacketParams = await dal.execute<ResultSetHeader>(
+      sqlQuery,
+      values,
+    );
 
     const addedRecipe = await this.getRecipeById(info.insertId);
 

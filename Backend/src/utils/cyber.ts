@@ -1,7 +1,7 @@
 import { UserModel } from '../models/user-model.js';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { appConfig } from './app-config.js';
-import { RoleModel } from '../models/role-model.js';
+import { eRole } from '../enums/role.js';
 import crypto from 'crypto';
 
 class Cyber {
@@ -33,7 +33,7 @@ class Cyber {
 
       // All is good:
       return true;
-    } catch (err: any) {
+    } catch (error: unknown) {
       // Token is not valid.
       return false;
     }
@@ -48,7 +48,7 @@ class Cyber {
     const user = container.user;
 
     // Return true if user is Admin:
-    return user.roleId === RoleModel.Admin;
+    return user.roleId === eRole.Admin;
   }
 
   // Hash password:

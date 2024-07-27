@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express from 'express';
-import expressFileUpload from 'express-fileupload';
-import path from 'path';
-import { fileSaver } from 'uploaded-file-saver';
+// import expressFileUpload from 'express-fileupload';
+// import path from 'path';
+// import { fileSaver } from 'uploaded-file-saver';
 import { appConfig } from './utils/app-config';
 import { errorsMiddleware } from './middleware/errors-middleware';
 import { loggerMiddleware } from './middleware/logger-middleware';
@@ -22,10 +22,10 @@ class App {
     this.server.use(express.json());
 
     // Create request.files containing uploaded files:
-    this.server.use(expressFileUpload());
+    // this.server.use(expressFileUpload());
 
     // Configure images folder:
-    fileSaver.config(path.join(__dirname, '1-assets', 'images'));
+    // fileSaver.config(path.join(__dirname, '1-assets', 'images'));
 
     // Register middleware:
     this.server.use(loggerMiddleware.logToConsole);
