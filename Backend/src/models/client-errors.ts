@@ -1,7 +1,7 @@
 import { eStatusCode } from '../enums/status-code';
 
 // Base class for any client error:
-abstract class ClientError {
+export abstract class ClientError {
   public message: string;
   public status: number;
 
