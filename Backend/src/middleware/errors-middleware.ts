@@ -24,7 +24,7 @@ class ErrorsMiddleware {
     err: any,
     request: Request,
     response: Response,
-    // next: NextFunction,
+    next: NextFunction,
   ): void {
     // Log error to console:
     console.log(err);
@@ -32,25 +32,14 @@ class ErrorsMiddleware {
     // Log error to file:
     logger.logError(err);
 
-    // Determine error status and message:
-    let status: number;
-    let message: string;
+    // Take error status:
+    const status = err.status || eStatusCode.InternalServerError;
 
-    if (err instanceof ClientError) {
-      // Here TypeScript knows `err` has `status` and `message` properties
-      status = err.status;
-      message = err.message;
-    } else if (err instanceof Error) {
-      // Default to InternalServerError for general Errors
-      status = eStatusCode.InternalServerError;
-      message = appConfig.isProduction
+    // Take error message:
+    const message =
+      status === eStatusCode.InternalServerError && appConfig.isProduction
         ? 'Some error, please try again later.'
         : err.message;
-    } else {
-      // Handle unknown error types
-      status = eStatusCode.InternalServerError;
-      message = 'An unknown error occurred';
-    }
 
     // Response the error:
     response.status(status).send(message);
