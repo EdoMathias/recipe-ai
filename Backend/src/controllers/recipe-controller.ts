@@ -15,8 +15,8 @@ class RecipeController {
 
   //----------------------------------------------------------------------------
   private registerRoutes(): void {
-    this.router.get('/get-all-recipes', this.getAllRecipes);
-    this.router.get('/get-recipe/:recipeId', this.getRecipeById);
+    this.router.get('/recipes', this.getAllRecipes);
+    this.router.get('/recipes/:recipeId', this.getRecipeById);
     this.router.post('/recipes', this.addRecipe);
   }
 
