@@ -7,6 +7,7 @@ import { appConfig } from './utils/app-config';
 import { errorsMiddleware } from './middleware/errors-middleware';
 import { loggerMiddleware } from './middleware/logger-middleware';
 import { recipeRouter } from './controllers/recipe-controller';
+import { recipeTypeRouter } from './controllers/recipe-type-controller';
 
 // Main application class:
 class App {
@@ -31,7 +32,7 @@ class App {
     this.server.use(loggerMiddleware.logToConsole);
 
     // Connect any controller route to the server:
-    this.server.use('/api', recipeRouter);
+    this.server.use('/api', recipeRouter, recipeTypeRouter);
 
     // Route not found middleware:
     this.server.use(errorsMiddleware.routeNotFound);
