@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { eStatusCode } from '../enums/status-code';
 import { logger } from '../utils/logger';
 import { appConfig } from '../utils/app-config';
-import { ClientError, RouteNotFoundError } from '../models/client-errors';
+import { RouteNotFoundError } from '../models/client-errors';
 
 class ErrorsMiddleware {
   // Route not found:
@@ -24,6 +24,7 @@ class ErrorsMiddleware {
     err: any,
     request: Request,
     response: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     next: NextFunction,
   ): void {
     // Log error to console:
