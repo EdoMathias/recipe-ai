@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { recipeService } from '../services/recipe-service';
-import { ValidationError } from '../models/client-errors';
-import { RecipeModel } from '../models/recipe-model';
 import { eStatusCode } from '../enums/status-code';
+import { ValidationError } from '../models/client-errors';
+import { recipeTypesService } from '../services/recipe-types-service';
+import { RecipeType } from '../models/recipe-types';
 
 class RecipeTypeController {
   // Create a router object for listening to HTTP requests:
@@ -15,20 +15,21 @@ class RecipeTypeController {
 
   //----------------------------------------------------------------------------
   private registerRoutes(): void {
-    this.router.get('/recipe-types', this.getAllRecipes);
-    this.router.get('/recipe-types/:recipeTypeId', this.getRecipeById);
-    this.router.post('/recipe-types', this.addRecipe);
+    this.router.get('/recipe-types', this.getAllRecipeTypes);
+    this.router.get('/recipe-types/:recipeTypeId', this.getRecipeTypeById);
+    this.router.post('/recipe-types', this.addRecipeType);
+    this.router.delete('/recipe-types/:recipeTypeId', this.deleteRecipeType);
   }
 
   //----------------------------------------------------------------------------
-  private async getAllRecipes(
+  private async getAllRecipeTypes(
     request: Request,
     response: Response,
     next: NextFunction,
   ): Promise<void> {
     try {
-      const recipes = await recipeService.getAllRecipes();
-      response.json(recipes);
+      const recipeTypes = await recipeTypesService.getAllRecipeTypes();
+      response.json(recipeTypes);
     } catch (error: unknown) {
       if (error instanceof Error) {
         next(error);
@@ -39,19 +40,48 @@ class RecipeTypeController {
   }
 
   //----------------------------------------------------------------------------
-  private async getRecipeById(): Promise<void> {}
-
-  //----------------------------------------------------------------------------
-  private async addRecipe(
+  private async getRecipeTypeById(
     request: Request,
     response: Response,
     next: NextFunction,
   ): Promise<void> {
     try {
-      const recipe = new RecipeModel(request.body);
-      const newRecipe = await recipeService.addRecipe(recipe);
+      const id = +request.params.recipeTypeId;
+      const recipeType = await recipeTypesService.getRecipeTypeById(id);
+      response.json(recipeType);
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
 
-      response.status(eStatusCode.Created).json(newRecipe);
+  //----------------------------------------------------------------------------
+  private async addRecipeType(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const recipeType: RecipeType = request.body;
+      const newRecipeTypes = await recipeTypesService.addRecipeType(
+        recipeType.type_name,
+      );
+
+      response.status(eStatusCode.Created).json(newRecipeTypes);
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+
+  //----------------------------------------------------------------------------
+  private async deleteRecipeType(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const id = +request.params.recipeTypeId;
+      const recipeType = await recipeTypesService.getRecipeTypeById(id);
+      response.sendStatus(eStatusCode.NoContent);
     } catch (error: unknown) {
       next(error);
     }
