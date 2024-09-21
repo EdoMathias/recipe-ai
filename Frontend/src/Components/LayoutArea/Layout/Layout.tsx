@@ -8,13 +8,13 @@ import './Layout.css';
 function Layout(): React.ReactElement {
   return (
     <div className="Layout">
-      <header>
-        <Header />
-      </header>
       <nav>
         <Menu />
       </nav>
       <main>
+        <header>
+          <Header />
+        </header>
         <Routing />
       </main>
       <footer>

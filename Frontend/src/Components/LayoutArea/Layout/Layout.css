@@ -2,7 +2,7 @@
   height: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: 10% 85% 5%; /* שלוש שורות */
+  grid-template-rows: 95% 5%; /* שלוש שורות */
   grid-template-columns: 1fr 5fr; /* שתי עמודות */
   border: 1px solid;
 }
@@ -18,4 +18,5 @@ footer {
 
 main {
   overflow: auto;
+  background-color: #fcf4f0;
 }
