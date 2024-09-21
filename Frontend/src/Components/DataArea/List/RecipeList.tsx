@@ -1,12 +1,12 @@
 import React from 'react';
-import './Home.css';
+import './RecipeList.css';
 import { Box, Grid2, Typography } from '@mui/material';
 import RecipeCard from '../../RecipeCard/RecipeCard';
 import { recipesMock } from '../../../DataMocks/RecipesMock';
 
-function Home(): React.ReactElement {
+function RecipeList(): React.ReactElement {
   return (
-    <div className="Home">
+    <div className="RecipeList">
       <Typography variant="h2" gutterBottom>
         Which recipe would you like to cook today?
       </Typography>
@@ -31,4 +31,4 @@ function Home(): React.ReactElement {
   );
 }
 
-export default Home;
+export default RecipeList;
