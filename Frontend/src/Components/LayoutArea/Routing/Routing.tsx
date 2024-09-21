@@ -1,3 +1,4 @@
+import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Add from '../../DataArea/Add/Add';
 import List from '../../DataArea/List/List';
@@ -5,7 +6,7 @@ import Home from '../../HomeArea/Home/Home';
 import Page404 from '../page404/page404';
 import './Routing.css';
 
-function Routing(): JSX.Element {
+function Routing(): React.ReactElement {
   return (
     <div className="Routing">
       <Routes>

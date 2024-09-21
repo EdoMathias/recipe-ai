@@ -1,3 +1,4 @@
+import React from 'react';
 import './Add.css';
 
 function Add(): React.ReactElement {

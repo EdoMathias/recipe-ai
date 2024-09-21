@@ -1,6 +1,7 @@
+import React from 'react';
 import './List.css';
 
-function List(): JSX.Element {
+function List(): React.ReactElement {
   return (
     <div className="List">
       <h2>List...</h2>

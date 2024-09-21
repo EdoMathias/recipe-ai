@@ -1,6 +1,7 @@
+import React from 'react';
 import './Header.css';
 
-function Header(): JSX.Element {
+function Header(): React.ReactElement {
   return (
     <div className="Header">
       <h1>Full Stack Template</h1>

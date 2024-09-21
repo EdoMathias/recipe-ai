@@ -1,6 +1,7 @@
+import React from 'react';
 import './Home.css';
 
-function Home(): JSX.Element {
+function Home(): React.ReactElement {
   return (
     <div className="Home">
       <h2>Home Page...</h2>

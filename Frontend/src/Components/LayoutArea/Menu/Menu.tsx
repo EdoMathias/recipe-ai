@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import './Menu.css';
+import React from 'react';
 
-function Menu(): JSX.Element {
+function Menu(): React.ReactElement {
   return (
     <div className="Menu">
       <NavLink to="/home">Home</NavLink>
