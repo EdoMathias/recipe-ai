@@ -17,8 +17,13 @@
       }
     },
     "rules": {
-      "prettier/prettier": ["error"],
+      "prettier/prettier": ["error",   {
+        "endOfLine": "auto"
+      }],
       "react/react-in-jsx-scope": "off",
+      "import/prefer-default-export": "off",
+      "import/extensions": "off",
+      "react/no-unescaped-entities": "off",
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
       "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
@@ -27,7 +32,15 @@
     "settings": {
       "react": {
         "version": "detect"
+      },
+      "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
-  }
-  
+  },
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}
