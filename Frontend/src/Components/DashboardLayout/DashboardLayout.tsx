@@ -4,6 +4,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import type { Navigation } from '@toolpad/core';
@@ -98,7 +99,7 @@ export default function RecipeAiDashboard() {
       navigation={NAVIGATION}
       router={router}
       theme={recipeAiTheme}
-      branding={{ title: 'RECIPE AI' }}
+      branding={{ title: 'RECIPE AI', logo: <AutoStoriesIcon /> }}
     >
       <DashboardLayout>
         <Box sx={{ backgroundColor: '#fcf4f0', minHeight: '100vh' }}>
