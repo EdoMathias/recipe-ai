@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { RecipeCardInfo } from '../../Types/recipe-card-info';
+import { RecipeCardInfo } from '../../Types/recipe-info';
 
 type RecipeCardProps = {
   recipe: RecipeCardInfo;

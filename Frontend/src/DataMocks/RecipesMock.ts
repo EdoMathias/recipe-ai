@@ -1,4 +1,4 @@
-import { RecipeCardInfo } from '../Types/recipe-card-info';
+import { RecipeCardInfo } from '../Types/recipe-info';
 
 export const recipesMock: RecipeCardInfo[] = [
   {
